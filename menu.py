@@ -1,4 +1,13 @@
+from pickle import load, dump
 from tkinter import *
+
+import main
+from main import player1
+
+
+def set_status(text):
+    global text_id
+    canvas.itemconfig(text_id, text=text)
 def pause_toggle():
     global pause
     pause = not pause
@@ -167,13 +176,5 @@ pause = False
 
 
 
-
 game_width = 800
 game_height = 800
-window = Tk()
-window.title('Меню игры')
-
-canvas = Canvas(window, width=game_width, height=game_height, bg='white')
-canvas.pack()
-
-window.mainloop()

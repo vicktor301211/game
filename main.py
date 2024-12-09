@@ -1,10 +1,6 @@
-
+import menu
 from menu import *
 from tkinter import *
-
-
-
-
 
 def set_status(text):
     global text_id
@@ -13,8 +9,27 @@ def set_status(text):
 
 
 def key_handler(event):
-    global KEY_PLAYER1, KEY_PLAYER2,  SPEED, x1, x2, game_over
+    global KEY_PLAYER1, KEY_PLAYER2,  SPEED, x1, x2, game_over, KEY_UP, KEY_DOWN, KEY_ENTER, KEY_PAUSE, KEY_ESC
+    if event.keycode == KEY_UP:
+        menu_up()
+    if event.keycode == KEY_DOWN:
+        menu_down()
+    if event.keycode == KEY_ENTER:
+        menu_enter()
 
+    if game_over:
+        return
+    if event.keycode == KEY_PAUSE:
+        pause_toggle()
+
+    if pause:
+        return
+    if event.keycode == KEY_ESC:
+        menu_toggle()
+
+    if menu_mode:
+        return
+    set_status('Вперед!')
     # Управление игроком 1
     if event.keycode == KEY_PLAYER1:
         x1 += SPEED
@@ -34,6 +49,7 @@ def check_finish():
     if x1 >= x_finish or x2 >= x_finish:
         game_over = True
         set_status(f'Победил игрок {"первый" if x1 > x2 else "второй"}!')
+
 
 
 
@@ -66,16 +82,15 @@ KEY_PAUSE = 112
 SPEED = 12
 
 game_over = False
-pause = False
+pause = True
 
 game_width = 800
 game_height = 800
 window = Tk()
 window.title('DMEC')
-
 canvas = Canvas(window, width=game_width, height=game_height, bg='white')
 canvas.pack()
-
+menu.menu_create()
 player1 = canvas.create_rectangle(x1,
                                   y1,
                                   x1 + player_size,
