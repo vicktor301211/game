@@ -1,4 +1,7 @@
 from tkinter import *
+from menu import *
+
+
 def set_status(text, color='black'):
     pass
 def key_handler(event):
