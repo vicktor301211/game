@@ -47,9 +47,6 @@ def game_new(canvas, player1, player2):
 
 
 
-
-
-
 def game_resume():
     print('Возобновляем старую игру')
 
