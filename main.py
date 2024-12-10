@@ -1,96 +1,97 @@
 import menu
-from menu import *
+from menu import*
 from tkinter import *
 
-def set_status(text):
-    global text_id
-    canvas.itemconfig(text_id, text=text)
+def set_status(text, color='black'):
+    canvas.itemconfig(text_id, text=text, fill=color)
 
 
 
 def key_handler(event):
     global KEY_PLAYER1, KEY_PLAYER2,  SPEED, x1, x2, game_over, KEY_UP, KEY_DOWN, KEY_ENTER, KEY_PAUSE, KEY_ESC
     if event.keycode == KEY_UP:
-        menu_up()
+        menu.menu_up(canvas)
     if event.keycode == KEY_DOWN:
-        menu_down()
+        menu.menu_down(canvas)
     if event.keycode == KEY_ENTER:
-        menu_enter()
+        menu.menu_enter(canvas, player1, player2, text_id)
 
     if game_over:
         return
+
     if event.keycode == KEY_PAUSE:
-        pause_toggle()
+        menu.pause_toggle(canvas, text_id)
 
     if pause:
         return
     if event.keycode == KEY_ESC:
-        menu_toggle()
+        menu.menu_toggle(canvas)
 
     if menu_mode:
         return
     set_status('Вперед!')
-    # Управление игроком 1
     if event.keycode == KEY_PLAYER1:
-        x1 += SPEED
-        canvas.coords(player1, x1, y1, x1 + player_size, y1 + player_size)
-
-    # Управление игроком 2
-    elif event.keycode == KEY_PLAYER2:
-        x2 += SPEED
-        canvas.coords(player2, x2, y2, x2 + player_size, y2 + player_size)
-
-    # Пауза
-
-    # Проверка завершения гонки
+        canvas.move(player1, SPEED, 0)
+    if event.keycode == KEY_PLAYER2:
+        canvas.move(player2, SPEED, 0)
     check_finish()
+
 def check_finish():
-    global x1, x2, game_over
-    if x1 >= x_finish or x2 >= x_finish:
+    global game_over
+    coords_player1 = canvas.coords(player1)
+    coords_player2 = canvas.coords(player2)
+    coords_finish = canvas.coords(finish_id)
+
+    x1_right = coords_player1[2]
+    x2_right = coords_player2[2]
+    x_finish = coords_finish[0]
+
+    if x1_right >= x_finish:
+        set_status('Победа верхнего игрока', player1_color)
         game_over = True
-        set_status(f'Победил игрок {"первый" if x1 > x2 else "второй"}!')
+
+    if x2_right >= x_finish:
+        set_status('Победа нижнего игрока', player2_color)
+        game_over = True
 
 
 
 
 
 
-game_width = 800
-game_height = 800
-menu_mode = True
-menu_options = ['Возврат в игру', 'Новая игра', 'Сохранить', 'Загрузить', 'Выход']
-menu_current_index = 3
-menu_options_id = []
+game_width = menu.game_width
+game_height = menu.game_height
+menu_mode = menu.menu_mode
+menu_options = menu.menu_options
+menu_current_index = menu.menu_current_index
+menu_options_id = menu.menu_options_id
 
-KEY_UP = 38
-KEY_DOWN = 40
-KEY_ESC = 27
-KEY_ENTER = 13
+KEY_UP = menu.KEY_UP
+KEY_DOWN = menu.KEY_DOWN
+KEY_ESC = menu.KEY_ESC
+KEY_ENTER = menu.KEY_ENTER
 
-player_size = 100
-x1, y1 = 50, 50
+player_size = menu.player_size
+x1, y1 = menu.x1, y1
 x2, y2 = x1, y1 + player_size + 100
-player1_color = 'red'
-player2_color = 'blue'
+player1_color = menu.player1_color
+player2_color = menu.player2_color
 
 x_finish = game_width - 50
 
-KEY_PLAYER1 = 39
-KEY_PLAYER2 = 68
-KEY_PAUSE = 112
+KEY_PLAYER1 = menu.KEY_PLAYER1
+KEY_PLAYER2 = menu.KEY_PLAYER2
+KEY_PAUSE = menu.KEY_PAUSE
 
-SPEED = 12
+SPEED = menu.SPEED
 
-game_over = False
-pause = True
-
-game_width = 800
-game_height = 800
+game_over = menu.game_over
+pause = menu.pause
 window = Tk()
 window.title('DMEC')
 canvas = Canvas(window, width=game_width, height=game_height, bg='white')
 canvas.pack()
-menu.menu_create()
+menu = menu.menu_create(canvas)
 player1 = canvas.create_rectangle(x1,
                                   y1,
                                   x1 + player_size,

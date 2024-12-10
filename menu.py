@@ -1,44 +1,41 @@
 from pickle import load, dump
 from tkinter import *
 
-import main
-from main import player1
 
+def set_status(canvas, text_id, text, color='black'):
+    canvas.itemconfig(text_id, text=text, fill=color)
 
-def set_status(text):
-    global text_id
-    canvas.itemconfig(text_id, text=text)
-def pause_toggle():
+def pause_toggle(canvas, text_id):
     global pause
     pause = not pause
     if pause:
-        set_status('ПАУЗА')
+        set_status(canvas, text_id, text = 'ПАУЗА')
     else:
-        set_status('ВПЕРЕД!')
+        set_status(canvas, text_id, text = 'ВПЕРЕД!')
 
-def menu_toggle():
+def menu_toggle(canvas):
     global menu_mode
     menu_mode = not menu_mode
     if menu_mode:
-        menu_show()
+        menu_show(canvas)
     else:
-        menu_hide()
-def menu_enter():
+        menu_hide(canvas)
+def menu_enter(canvas, player1, player2, text_id):
     if menu_current_index == 0:
         game_resume()
     elif menu_current_index == 1:
-        game_new()
+        game_new(canvas, player1, player2)
     elif menu_current_index == 2:
-        game_save()
+        game_save(canvas, player1, player2, text_id)
     elif menu_current_index == 3:
-        game_load()
+        game_load(canvas, player1, player2, text_id)
     elif menu_current_index == 4:
         game_exit()
-    menu_hide()
+    menu_hide(canvas)
 
 
-def game_new():
-    # menu_toggle()
+def game_new(canvas, player1, player2):
+    menu_toggle(canvas)
     x1, y1 = 50, 50
     x2, y2 = x1, y1 + player_size + 100
     canvas.coords(player1, x1, y1, x1 + player_size,
@@ -59,7 +56,7 @@ def game_resume():
 
 
 
-def game_save():
+def game_save(canvas, player1, player2, text_id):
     print('Сохраняем игру')
     # 1
     x1 =  canvas.coords(player1)[0]
@@ -67,10 +64,10 @@ def game_save():
     data = [x1, x2]
     with open('save.dat', 'wb') as f:
         dump(data, f)
-        set_status('Сохранено', color='yellow')
+        set_status(canvas, text_id, text = 'Сохранено', color='yellow')
 
 
-def game_load():
+def game_load(canvas, player1, player2, text_id):
     print('Загружаем игру')
     # 2
     global x1, x2
@@ -81,7 +78,7 @@ def game_load():
                       y1 + player_size)
         canvas.coords(player2, x2, y2, x2 + player_size,
                       y2 + player_size)
-        set_status('Загружено', color='yellow')
+        set_status(canvas, text_id, text = 'Загружено', color='yellow')
 
 
 def game_exit():
@@ -89,34 +86,34 @@ def game_exit():
     exit()
 
 
-def menu_show():
+def menu_show(canvas):
     global menu_mode
     menu_mode = True
-    menu_update()
+    menu_update(canvas)
 
-def menu_hide():
+def menu_hide(canvas):
     global menu_mode
     menu_mode = False
-    menu_update()
+    menu_update(canvas)
 
 
-def menu_up():
+def menu_up(canvas):
     global menu_current_index
     menu_current_index -= 1
     if menu_current_index < 0:
         menu_current_index = 0
-    menu_update()
+    menu_update(canvas)
 
 
-def menu_down():
+def menu_down(canvas):
     global menu_current_index
     menu_current_index += 1
     if menu_current_index > len(menu_options) - 1:
         menu_current_index = len(menu_options) - 1
-    menu_update()
+    menu_update(canvas)
 
 
-def menu_update():
+def menu_update(canvas):
     for menu_index in range(len(menu_options_id)):
         element_id = menu_options_id[menu_index]
         if menu_mode:
@@ -136,7 +133,8 @@ def menu_create(canvas):
                                        fill='black')
         menu_options_id.append(option_id)
         offest += 50
-    menu_update()
+    menu_update(canvas)
+
 
 
 
@@ -171,10 +169,3 @@ SPEED = 12
 game_over = False
 pause = False
 
-
-
-
-
-
-game_width = 800
-game_height = 800
