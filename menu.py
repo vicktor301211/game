@@ -1,7 +1,5 @@
 from pickle import load, dump
 from tkinter import *
-
-
 def set_status(canvas, text_id, text, color='black'):
     canvas.itemconfig(text_id, text=text, fill=color)
 
@@ -9,9 +7,9 @@ def pause_toggle(canvas, text_id):
     global pause
     pause = not pause
     if pause:
-        set_status(canvas, text_id, text = 'ПАУЗА')
+        set_status(canvas, text_id, text = 'Пауза')
     else:
-        set_status(canvas, text_id, text = 'ВПЕРЕД!')
+        set_status(canvas, text_id, text = 'Вперёд!')
 
 def menu_toggle(canvas):
     global menu_mode
@@ -20,6 +18,7 @@ def menu_toggle(canvas):
         menu_show(canvas)
     else:
         menu_hide(canvas)
+
 def menu_enter(canvas, player1, player2, text_id):
     if menu_current_index == 0:
         game_resume()
@@ -138,7 +137,7 @@ def menu_create(canvas):
 
 game_width = 800
 game_height = 800
-menu_mode = True
+menu_mode = False
 menu_options = ['Возврат в игру', 'Новая игра', 'Сохранить', 'Загрузить', 'Выход']
 menu_current_index = 3
 menu_options_id = []
@@ -165,4 +164,3 @@ SPEED = 12
 
 game_over = False
 pause = False
-

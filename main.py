@@ -5,27 +5,32 @@ from tkinter import *
 def set_status(text, color='black'):
     canvas.itemconfig(text_id, text=text, fill=color)
 
-
-
 def key_handler(event):
-    global KEY_PLAYER1, KEY_PLAYER2,  SPEED, x1, x2, game_over, KEY_UP, KEY_DOWN, KEY_ENTER, KEY_PAUSE, KEY_ESC
+    #global KEY_PLAYER1, KEY_PLAYER2,  SPEED, x1, x2, game_over, KEY_UP, KEY_DOWN, KEY_ENTER, KEY_PAUSE, KEY_ESC
     if event.keycode == KEY_UP:
         menu.menu_up(canvas)
     if event.keycode == KEY_DOWN:
         menu.menu_down(canvas)
     if event.keycode == KEY_ENTER:
         menu.menu_enter(canvas, player1, player2, text_id)
+
     if game_over:
         return
+
     if event.keycode == KEY_PAUSE:
         menu.pause_toggle(canvas, text_id)
+
     if pause:
         return
+
     if event.keycode == KEY_ESC:
         menu.menu_toggle(canvas)
+
     if menu_mode:
         return
+
     set_status('Вперед!')
+
     if event.keycode == KEY_PLAYER1:
         canvas.move(player1, SPEED, 0)
     if event.keycode == KEY_PLAYER2:
@@ -50,11 +55,6 @@ def check_finish():
     if x2_right >= x_finish:
         set_status('Победа нижнего игрока', player2_color)
         game_over = True
-
-
-
-
-
 
 game_width = menu.game_width
 game_height = menu.game_height
@@ -111,5 +111,6 @@ text_id = canvas.create_text(x1,
                              text='Вперед!')
 
 window.bind('<KeyRelease>', key_handler)
+
 window.mainloop()
 
