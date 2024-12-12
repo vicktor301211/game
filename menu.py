@@ -6,18 +6,13 @@ from tkinter import *
 def pause_toggle():
     global pause
     pause = not pause
-#     if pause:
-#         set_status(canvas, text_id, text = 'Пауза')
-#     else:
-#         set_status(canvas, text_id, text = 'Вперёд!')
+
 
 def menu_toggle(canvas):
     global menu_mode
     menu_mode = not menu_mode
-    if menu_mode:
-        menu_show(canvas)
-    else:
-        menu_hide(canvas)
+    menu_update(canvas)
+
 
 def menu_enter(canvas, player1, player2, text_id):
     if menu_current_index == 0:
@@ -160,7 +155,7 @@ x_finish = game_width - 50
 
 KEY_PLAYER1 = 39
 KEY_PLAYER2 = 68
-KEY_PAUSE = 19
+KEY_PAUSE = 32
 
 SPEED = 12
 
