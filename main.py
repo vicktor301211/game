@@ -7,9 +7,9 @@ def set_status(text, color='black'):
 
 def key_handler(event):
     #global KEY_PLAYER1, KEY_PLAYER2,  SPEED, x1, x2, game_over, KEY_UP, KEY_DOWN, KEY_ENTER, KEY_PAUSE, KEY_ESC
-    if event.keycode == KEY_UP:
+    if event.keycode == KEY_UP or event.keycode == KEY_UP_2:
         menu.menu_up(canvas)
-    if event.keycode == KEY_DOWN:
+    if event.keycode == KEY_DOWN or event.keycode == KEY_DOWN_2:
         menu.menu_down(canvas)
     if event.keycode == KEY_ENTER:
         menu.menu_enter(canvas, player1, player2, text_id)
@@ -17,7 +17,7 @@ def key_handler(event):
     if game_over:
         return
 
-    if event.keycode == KEY_PAUSE:
+    if event.keycode == KEY_PAUSE or event.keycode == KEY_PAUSE_2:
         menu.pause_toggle()
         set_status('Пауза!')
 
@@ -38,7 +38,6 @@ def key_handler(event):
         canvas.move(player2, SPEED, 0)
 
     check_finish()
-
 def check_finish():
     global game_over
     coords_player1 = canvas.coords(player1)
@@ -65,7 +64,9 @@ menu_current_index = menu.menu_current_index
 menu_options_id = menu.menu_options_id
 
 KEY_UP = menu.KEY_UP
+KEY_UP_2 = menu.KEY_UP_2
 KEY_DOWN = menu.KEY_DOWN
+KEY_DOWN_2 = menu.KEY_DOWN_2
 KEY_ESC = menu.KEY_ESC
 KEY_ENTER = menu.KEY_ENTER
 
@@ -80,7 +81,7 @@ x_finish = game_width - 50
 KEY_PLAYER1 = menu.KEY_PLAYER1
 KEY_PLAYER2 = menu.KEY_PLAYER2
 KEY_PAUSE = menu.KEY_PAUSE
-
+KEY_PAUSE_2 = menu.KEY_PAUSE_2
 SPEED = menu.SPEED
 
 game_over = menu.game_over

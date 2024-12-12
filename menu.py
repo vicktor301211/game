@@ -146,7 +146,9 @@ menu_options_id = []
 
 
 KEY_UP = 87
+KEY_UP_2 = 38
 KEY_DOWN = 83
+KEY_DOWN_2 = 40
 KEY_ESC = 27
 KEY_ENTER = 13
 
@@ -160,8 +162,8 @@ x_finish = game_width - 50
 
 KEY_PLAYER1 = 39
 KEY_PLAYER2 = 68
-KEY_PAUSE = 19
-
+KEY_PAUSE = 32
+KEY_PAUSE_2 = 19
 SPEED = 12
 
 game_over = False
