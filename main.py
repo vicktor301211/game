@@ -18,9 +18,10 @@ def key_handler(event):
         return
 
     if event.keycode == KEY_PAUSE:
-        menu.pause_toggle(canvas, text_id)
+        menu.pause_toggle()
+        set_status('Пауза!')
 
-    if pause:
+    if menu.pause:
         return
 
     if event.keycode == KEY_ESC:

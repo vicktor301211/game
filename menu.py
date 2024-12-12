@@ -1,15 +1,15 @@
 from pickle import load, dump
 from tkinter import *
-def set_status(canvas, text_id, text, color='black'):
-    canvas.itemconfig(text_id, text=text, fill=color)
+# def set_status(canvas, text_id, text, color='black'):
+#     canvas.itemconfig(text_id, text=text, fill=color)
 
-def pause_toggle(canvas, text_id):
+def pause_toggle():
     global pause
     pause = not pause
-    if pause:
-        set_status(canvas, text_id, text = 'Пауза')
-    else:
-        set_status(canvas, text_id, text = 'Вперёд!')
+#     if pause:
+#         set_status(canvas, text_id, text = 'Пауза')
+#     else:
+#         set_status(canvas, text_id, text = 'Вперёд!')
 
 def menu_toggle(canvas):
     global menu_mode
@@ -60,7 +60,7 @@ def game_save(canvas, player1, player2, text_id):
     data = [x1, x2]
     with open('save.dat', 'wb') as f:
         dump(data, f)
-        set_status(canvas, text_id, text = 'Сохранено', color='yellow')
+        #set_status(canvas, text_id, text = 'Сохранено', color='yellow')
 
 
 def game_load(canvas, player1, player2, text_id):
@@ -74,7 +74,7 @@ def game_load(canvas, player1, player2, text_id):
                       y1 + player_size)
         canvas.coords(player2, x2, y2, x2 + player_size,
                       y2 + player_size)
-        set_status(canvas, text_id, text = 'Загружено', color='yellow')
+        #set_status(canvas, text_id, text = 'Загружено', color='yellow')
 
 
 def game_exit():
@@ -83,13 +83,15 @@ def game_exit():
 
 
 def menu_show(canvas):
-    global menu_mode
+    global menu_mode, pause
     menu_mode = True
+    pause = True
     menu_update(canvas)
 
 def menu_hide(canvas):
-    global menu_mode
+    global menu_mode, pause
     menu_mode = False
+    pause = False
     menu_update(canvas)
 
 
@@ -137,7 +139,7 @@ def menu_create(canvas):
 
 game_width = 800
 game_height = 800
-menu_mode = False
+menu_mode = False # Не переключать! Игра работать не будет!
 menu_options = ['Возврат в игру', 'Новая игра', 'Сохранить', 'Загрузить', 'Выход']
 menu_current_index = 3
 menu_options_id = []
