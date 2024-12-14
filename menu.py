@@ -79,7 +79,7 @@ def game_load(canvas, player1, player2, text_id):
 
 def game_exit():
     print('Выходим из игры')
-    exit()
+    exit('Игра завершена по причине: выбран выход')
 
 
 def menu_show(canvas):
