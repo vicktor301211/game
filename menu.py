@@ -1,3 +1,4 @@
+from binascii import Error
 from pickle import load, dump
 from tkinter import *
 # def set_status(canvas, text_id, text, color='black'):
@@ -79,7 +80,7 @@ def game_load(canvas, player1, player2, text_id):
 
 def game_exit():
     print('Выходим из игры')
-    exit('Игра завершена по причине: выбран выход')
+    exit('Error Type: Memory Access Violation (Ошибка выделения памяти)')
 
 
 def menu_show(canvas):
